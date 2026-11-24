@@ -1,0 +1,14 @@
+# Test the same runtime dependencies as the candidate application image.
+ARG APP_IMAGE=intel-ingest-dev:local
+FROM ${APP_IMAGE}
+
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PYTHONPATH=/workspace/backend
+WORKDIR /workspace
+COPY backend/requirements.txt backend/requirements-dev.txt ./backend/
+RUN pip freeze > /tmp/runtime-constraints.txt \
+    && pip install --no-cache-dir -c /tmp/runtime-constraints.txt -r backend/requirements-dev.txt
+COPY backend ./backend
+COPY frontend ./frontend
+COPY scripts ./scripts
+COPY compose.development.yml .
+CMD ["python", "-m", "unittest", "discover", "-s", "backend/tests", "-q"]

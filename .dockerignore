@@ -1,0 +1,23 @@
+# Keep credentials, backups and Git history out of the Docker build context.
+.git
+.env
+.env.*
+data/
+**/*.dump
+**/*.db
+**/*.sqlite
+**/*.sqlite3
+**/*.pem
+**/*.key
+
+# Local dependencies and generated files are not application source.
+**/__pycache__/
+**/*.py[cod]
+**/.venv/
+**/venv/
+**/node_modules/
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/.DS_Store
+**/*.log

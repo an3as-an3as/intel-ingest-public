@@ -1,0 +1,23 @@
+{
+  "version": "country-news-languages-v1",
+  "note": "Suggested reporting languages, not an exhaustive census or a guarantee of provider coverage. English/original queries are retained; overrides support regional/minority languages.",
+  "countries": {
+    "DK": ["da"], "FI": ["fi", "sv"], "SE": ["sv"], "NO": ["no"], "IS": ["is"],
+    "EE": ["et"], "LV": ["lv"], "LT": ["lt"], "PL": ["pl"], "DE": ["de"], "AT": ["de"],
+    "CH": ["de", "fr", "it"], "BE": ["nl", "fr", "de"], "NL": ["nl"], "LU": ["fr", "de", "lb"],
+    "FR": ["fr"], "ES": ["es"], "PT": ["pt"], "IT": ["it"], "IE": ["en", "ga"], "GB": ["en"],
+    "US": ["en"], "CA": ["en", "fr"], "AU": ["en"], "NZ": ["en", "mi"],
+    "RU": ["ru"], "UA": ["uk"], "BY": ["be", "ru"], "MD": ["ro"], "RO": ["ro"],
+    "CZ": ["cs"], "SK": ["sk"], "HU": ["hu"], "SI": ["sl"], "HR": ["hr"], "RS": ["sr"],
+    "BA": ["bs", "hr", "sr"], "BG": ["bg"], "GR": ["el"], "CY": ["el", "tr"], "TR": ["tr"],
+    "GE": ["ka"], "AM": ["hy"], "AZ": ["az"], "KZ": ["kk", "ru"],
+    "CN": ["cn"], "TW": ["tw"], "HK": ["tw", "en"], "JP": ["ja"], "KR": ["ko"],
+    "IN": ["hi", "en"], "PK": ["ur", "en"], "BD": ["bn"], "ID": ["id"], "MY": ["ms", "en"],
+    "SG": ["en", "cn", "ms", "ta"], "VN": ["vi"], "TH": ["th"], "PH": ["tl", "en"],
+    "IL": ["he", "ar"], "PS": ["ar"], "IR": ["fa"], "IQ": ["ar", "ku"], "SY": ["ar"],
+    "LB": ["ar"], "JO": ["ar"], "SA": ["ar"], "AE": ["ar", "en"], "QA": ["ar", "en"],
+    "YE": ["ar"], "EG": ["ar"], "MA": ["ar", "fr"], "DZ": ["ar", "fr"], "TN": ["ar", "fr"],
+    "ZA": ["en", "af", "zu"], "KE": ["sw", "en"], "NG": ["en"], "ET": ["am"],
+    "BR": ["pt"], "AR": ["es"], "CL": ["es"], "CO": ["es"], "MX": ["es"], "PE": ["es"]
+  }
+}

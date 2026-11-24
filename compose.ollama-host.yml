@@ -1,0 +1,11 @@
+# Optional host access for Docker Engine (including Linux).
+# Use with docker-compose.yml, NOT offline compose.development.yml.
+# Requires a Docker Engine version supporting host-gateway.
+# Set OLLAMA_BASE_URL explicitly in .env; this file only provides the hostname.
+services:
+  api:
+    extra_hosts:
+      - host.docker.internal:host-gateway
+  worker:
+    extra_hosts:
+      - host.docker.internal:host-gateway

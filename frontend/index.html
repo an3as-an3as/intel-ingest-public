@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <script>try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+  <title>Intel Ingest</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button id="sidebar-toggle" class="icon-btn" aria-controls="dashboard-sidebar" aria-expanded="true" aria-label="Hide dashboards sidebar" title="Hide dashboards">◧</button>
+    <a class="brand" href="#/home"><span class="brand-mark" aria-hidden="true">II</span><span>Intel Ingest</span></a>
+    <!-- environment-badge -->
+    <nav id="nav"></nav>
+    <div class="topbar-right">
+      <span id="pipeline-pill" class="pill" title="Pipeline status"></span>
+      <button id="theme-toggle" class="icon-btn" title="Toggle light/dark" aria-label="Toggle theme">◐</button>
+    </div>
+  </header>
+  <div class="app-layout">
+    <aside id="dashboard-sidebar" class="dashboard-sidebar" aria-labelledby="dashboard-sidebar-heading">
+      <h2 id="dashboard-sidebar-heading">Dashboards</h2>
+      <nav id="dashboard-nav" aria-label="Saved dashboards"></nav>
+      <a class="dashboard-create" href="#/setup">+ Set up dashboard</a>
+    </aside>
+    <main id="view"></main>
+  </div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="/static/app.js"></script>
+</body>
+</html>

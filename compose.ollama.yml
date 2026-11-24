@@ -1,0 +1,17 @@
+# Optional CPU-portable Ollama service. Does NOT publish Ollama to the host/LAN.
+# Use with docker-compose.yml, NOT with the offline development Compose file.
+# Set OLLAMA_IMAGE to a reviewed pinned tag or digest; no image/model chosen silently.
+services:
+  ollama:
+    image: ${OLLAMA_IMAGE:?Set OLLAMA_IMAGE to a reviewed Ollama tag or digest}
+    volumes:
+      - ollama-models:/root/.ollama
+    restart: unless-stopped
+  api:
+    environment:
+      OLLAMA_BASE_URL: http://ollama:11434
+  worker:
+    environment:
+      OLLAMA_BASE_URL: http://ollama:11434
+volumes:
+  ollama-models:

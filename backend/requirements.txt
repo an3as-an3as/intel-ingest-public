@@ -1,0 +1,15 @@
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+sqlalchemy==2.0.36
+psycopg[binary]==3.2.3
+pydantic==2.10.3
+pydantic-settings==2.6.1
+requests==2.32.3
+trafilatura==1.12.2
+lxml_html_clean==0.4.1
+anthropic>=1.0.0
+python-dateutil==2.9.0.post0
+pycountry==24.6.1
+jsonschema==4.23.0
+markdown-it-py==3.0.0
+bleach==6.2.0

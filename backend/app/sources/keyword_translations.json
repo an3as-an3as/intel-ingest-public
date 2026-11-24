@@ -1,0 +1,52 @@
+{
+  "version": "offline-suggestions-v1",
+  "note": "Reviewable starter suggestions, not a complete or independently validated dictionary. Missing phrases remain explicit; nothing is silently machine-translated offline.",
+  "languages": ["da", "sv", "fi", "de", "et", "lv", "lt", "ru"],
+  "keywords": {
+    "Baltic Sea": ["Østersøen", "Östersjön", "Itämeri", "Ostsee", "Läänemeri", "Baltijas jūra", "Baltijos jūra", "Балтийское море"],
+    "NATO": ["NATO", "Nato", "Nato", "NATO", "NATO", "NATO", "NATO", "НАТО"]
+  },
+  "events": {
+    "cyber": {
+      "cyberattack": ["cyberangreb", "cyberattack", "kyberhyökkäys", "Cyberangriff", "küberrünnak", "kiberuzbrukums", "kibernetinė ataka", "кибератака"],
+      "cyber attack": ["cyberangreb", "cyberattack", "kyberhyökkäys", "Cyberangriff", "küberrünnak", "kiberuzbrukums", "kibernetinė ataka", "кибератака"],
+      "ransomware": ["afpresningssoftware", "utpressningsprogram", "kiristyshaittaohjelma", "Erpressungssoftware", "lunavara", "izspiedējprogrammatūra", "išpirkos reikalaujanti programinė įranga", "программа-вымогатель"],
+      "data breach": ["databrud", "dataintrång", "tietomurto", "Datenschutzverletzung", "andmeleke", "datu noplūde", "duomenų saugumo pažeidimas", "утечка данных"],
+      "denial of service": ["tjenestenægtelsesangreb", "överbelastningsattack", "palvelunestohyökkäys", "Denial-of-Service-Angriff", "teenusetõkestusrünne", "pakalpojuma atteices uzbrukums", "paslaugos trikdymo ataka", "атака типа отказ в обслуживании"],
+      "DDoS attack": ["DDoS-angreb", "DDoS-attack", "DDoS-hyökkäys", "DDoS-Angriff", "DDoS-rünnak", "DDoS uzbrukums", "DDoS ataka", "DDoS-атака"],
+      "credential theft": ["tyveri af loginoplysninger", "stöld av inloggningsuppgifter", "kirjautumistietojen varastaminen", "Diebstahl von Zugangsdaten", "sisselogimisandmete vargus", "piekļuves datu zādzība", "prisijungimo duomenų vagystė", "кража учётных данных"],
+      "network intrusion": ["netværksindtrængen", "nätverksintrång", "verkkotunkeutuminen", "Netzwerkeinbruch", "võrku sissetung", "ielaušanās tīklā", "įsilaužimas į tinklą", "вторжение в сеть"],
+      "malware infection": ["malwareinfektion", "infektion av skadlig kod", "haittaohjelmatartunta", "Malware-Infektion", "pahavaraga nakatumine", "inficēšanās ar ļaunprogrammatūru", "užkrėtimas kenkėjiška programa", "заражение вредоносным ПО"],
+      "supply-chain attack": ["forsyningskædeangreb", "leveranskedjeattack", "toimitusketjuhyökkäys", "Lieferkettenangriff", "tarneahelarünnak", "piegādes ķēdes uzbrukums", "tiekimo grandinės ataka", "атака на цепочку поставок"],
+      "cyber espionage": ["cyberspionage", "cyberspionage", "kybervakoilu", "Cyberspionage", "küberspionaaž", "kiberspiegošana", "kibernetinis šnipinėjimas", "кибершпионаж"],
+      "computer systems compromised": ["kompromitterede computersystemer", "komprometterade datorsystem", "tietojärjestelmiin murtauduttu", "kompromittierte Computersysteme", "kompromiteeritud arvutisüsteemid", "kompromitētas datorsistēmas", "pažeistos kompiuterinės sistemos", "скомпрометированные компьютерные системы"]
+    },
+    "infrastructure": {
+      "infrastructure": ["infrastruktur", "infrastruktur", "infrastruktuuri", "Infrastruktur", "taristu", "infrastruktūra", "infrastruktūra", "инфраструктура"],
+      "railway": ["jernbane", "järnväg", "rautatie", "Eisenbahn", "raudtee", "dzelzceļš", "geležinkelis", "железная дорога"],
+      "power grid": ["elnet", "elnät", "sähköverkko", "Stromnetz", "elektrivõrk", "elektrotīkls", "elektros tinklas", "электросеть"],
+      "power outage": ["strømafbrydelse", "strömavbrott", "sähkökatko", "Stromausfall", "elektrikatkestus", "elektroapgādes pārtraukums", "elektros tiekimo sutrikimas", "отключение электроэнергии"],
+      "rail disruption": ["togtrafikforstyrrelse", "störning i tågtrafiken", "junaliikenteen häiriö", "Störung im Bahnverkehr", "raudteeliikluse häire", "dzelzceļa satiksmes traucējumi", "geležinkelių eismo sutrikimas", "нарушение железнодорожного движения"],
+      "cable damage": ["kabelskade", "kabelskada", "kaapelivaurio", "Kabelschaden", "kaablikahjustus", "kabeļa bojājums", "kabelio pažeidimas", "повреждение кабеля"],
+      "pipeline leak": ["rørledningslækage", "rörledningsläcka", "putkivuoto", "Pipelineleck", "torujuhtme leke", "cauruļvada noplūde", "vamzdyno nuotėkis", "утечка из трубопровода"],
+      "substation fire": ["brand i transformerstation", "brand i transformatorstation", "sähköasemapalo", "Brand im Umspannwerk", "alajaama tulekahju", "apakšstacijas ugunsgrēks", "gaisras pastotėje", "пожар на подстанции"],
+      "power grid failure": ["elnetnedbrud", "elnätsfel", "sähköverkon häiriö", "Stromnetzausfall", "elektrivõrgu rike", "elektrotīkla avārija", "elektros tinklo gedimas", "авария в электросети"],
+      "undersea cable damage": ["skade på søkabel", "skada på undervattenskabel", "merikaapelivaurio", "Unterseekabelschaden", "merekaabli kahjustus", "zemūdens kabeļa bojājums", "povandeninio kabelio pažeidimas", "повреждение подводного кабеля"],
+      "bridge collapse": ["brokollaps", "broras", "sillan sortuminen", "Brückeneinsturz", "silla kokkuvarisemine", "tilta sabrukums", "tilto griūtis", "обрушение моста"],
+      "telecommunications outage": ["telekommunikationsnedbrud", "telekommunikationsavbrott", "tietoliikennehäiriö", "Telekommunikationsausfall", "sidekatkestus", "telesakaru pārtraukums", "telekomunikacijų sutrikimas", "сбой телекоммуникаций"],
+      "water supply disruption": ["vandforsyningsafbrydelse", "vattenförsörjningsavbrott", "vedenjakeluhäiriö", "Unterbrechung der Wasserversorgung", "veevarustuse katkestus", "ūdensapgādes pārtraukums", "vandens tiekimo sutrikimas", "нарушение водоснабжения"],
+      "railway sabotage": ["jernbanesabotage", "järnvägssabotage", "rautatien sabotaasi", "Bahnsabotage", "raudteesabotaaž", "dzelzceļa sabotāža", "geležinkelio sabotažas", "диверсия на железной дороге"],
+      "airport closure": ["lufthavnslukning", "flygplatsstängning", "lentoaseman sulkeminen", "Flughafenschließung", "lennujaama sulgemine", "lidostas slēgšana", "oro uosto uždarymas", "закрытие аэропорта"]
+    },
+    "military_activity": {
+      "military exercise": ["militærøvelse", "militärövning", "sotaharjoitus", "Militärübung", "sõjaväeõppus", "militārās mācības", "karinės pratybos", "военные учения"],
+      "troop deployment": ["troppeudsendelse", "truppförflyttning", "joukkojen sijoittaminen", "Truppenverlegung", "vägede paigutamine", "karaspēka izvietošana", "pajėgų dislokavimas", "развёртывание войск"],
+      "military": ["militær", "militär", "sotilaallinen", "Militär", "sõjavägi", "militārs", "karinis", "военный"]
+    },
+    "maritime": {
+      "shipping": ["skibsfart", "sjöfart", "merenkulku", "Schifffahrt", "laevandus", "kuģniecība", "laivyba", "судоходство"],
+      "maritime": ["maritim", "maritim", "merellinen", "maritim", "merendus", "jūrniecība", "jūrinis", "морской"],
+      "vessel": ["fartøj", "fartyg", "alus", "Schiff", "laev", "kuģis", "laivas", "судно"]
+    }
+  }
+}

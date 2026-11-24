@@ -1,0 +1,950 @@
+{
+  "legacy-v1": {
+    "label": "Legacy v1 \u2014 existing searches unchanged",
+    "description": "Frozen original English presets. Default for new and existing streams unless explicitly changed.",
+    "events": {
+      "armed_conflict": {
+        "core": [
+          "war",
+          "armed conflict",
+          "airstrike"
+        ]
+      },
+      "military_activity": {
+        "core": [
+          "military exercise",
+          "troop deployment",
+          "military"
+        ]
+      },
+      "terrorism": {
+        "core": [
+          "terrorism",
+          "terrorist attack"
+        ]
+      },
+      "civil_unrest": {
+        "core": [
+          "protest",
+          "riot",
+          "civil unrest"
+        ]
+      },
+      "political": {
+        "core": [
+          "election",
+          "government",
+          "parliament"
+        ]
+      },
+      "diplomacy": {
+        "core": [
+          "diplomacy",
+          "diplomatic",
+          "peace talks"
+        ]
+      },
+      "crime": {
+        "core": [
+          "crime",
+          "trafficking",
+          "organized crime"
+        ]
+      },
+      "cyber": {
+        "core": [
+          "cyberattack",
+          "ransomware",
+          "data breach"
+        ]
+      },
+      "economic_sanctions": {
+        "core": [
+          "sanctions",
+          "trade",
+          "economy"
+        ]
+      },
+      "energy": {
+        "core": [
+          "energy",
+          "oil",
+          "natural gas"
+        ]
+      },
+      "maritime": {
+        "core": [
+          "shipping",
+          "maritime",
+          "vessel"
+        ]
+      },
+      "infrastructure": {
+        "core": [
+          "infrastructure",
+          "railway",
+          "power grid"
+        ]
+      },
+      "disaster_environment": {
+        "core": [
+          "earthquake",
+          "flood",
+          "wildfire",
+          "climate"
+        ]
+      },
+      "health": {
+        "core": [
+          "epidemic",
+          "outbreak",
+          "public health"
+        ]
+      },
+      "migration": {
+        "core": [
+          "migration",
+          "refugees",
+          "displacement"
+        ]
+      },
+      "technology": {
+        "core": [
+          "technology",
+          "artificial intelligence",
+          "science"
+        ]
+      }
+    }
+  },
+  "expanded-v1": {
+    "label": "Expanded v1 \u2014 experimental, opt-in",
+    "description": "Specific event phrases, optional related indicators, and separately enabled broad discovery terms. Not a strict superset of Legacy v1 and not yet validated against live reporting.",
+    "events": {
+      "armed_conflict": {
+        "core": [
+          "armed conflict",
+          "airstrike",
+          "air strike",
+          "missile strike",
+          "drone strike",
+          "artillery fire",
+          "shelling",
+          "ceasefire violation",
+          "ground offensive",
+          "cross-border attack",
+          "combat operation",
+          "rocket attack"
+        ],
+        "indicators": [
+          "ceasefire",
+          "civilian casualties",
+          "military casualties",
+          "front line",
+          "evacuation order",
+          "munition strike"
+        ],
+        "discovery": [
+          "war",
+          "attack",
+          "conflict"
+        ]
+      },
+      "military_activity": {
+        "core": [
+          "military exercise",
+          "naval exercise",
+          "troop deployment",
+          "military mobilisation",
+          "military mobilization",
+          "airspace violation",
+          "reservist call-up",
+          "military convoy",
+          "missile test",
+          "military manoeuvres",
+          "military maneuvers",
+          "military readiness"
+        ],
+        "indicators": [
+          "force posture",
+          "live-fire drill",
+          "defence procurement",
+          "defense procurement",
+          "military transport",
+          "air defence deployment",
+          "air defense deployment"
+        ],
+        "discovery": [
+          "military",
+          "army",
+          "navy",
+          "defence",
+          "defense"
+        ]
+      },
+      "terrorism": {
+        "core": [
+          "terrorist attack",
+          "terror plot",
+          "suicide bombing",
+          "car bombing",
+          "bomb attack",
+          "hostage taking",
+          "terrorism investigation",
+          "counterterrorism operation"
+        ],
+        "indicators": [
+          "improvised explosive device",
+          "extremist recruitment",
+          "terror financing",
+          "radicalisation",
+          "radicalization",
+          "violent extremism"
+        ],
+        "discovery": [
+          "terrorism",
+          "extremist",
+          "bombing"
+        ]
+      },
+      "civil_unrest": {
+        "core": [
+          "mass protest",
+          "anti-government protest",
+          "civil unrest",
+          "riot police",
+          "violent demonstration",
+          "general strike",
+          "protest crackdown",
+          "state of emergency",
+          "protest march",
+          "demonstrators clashed"
+        ],
+        "indicators": [
+          "labour strike",
+          "labor strike",
+          "civil disobedience",
+          "protest arrests",
+          "curfew imposed",
+          "road blockade",
+          "student demonstration"
+        ],
+        "discovery": [
+          "protest",
+          "riot",
+          "demonstration",
+          "strike"
+        ]
+      },
+      "political": {
+        "core": [
+          "general election",
+          "presidential election",
+          "parliamentary election",
+          "election results",
+          "government collapse",
+          "no-confidence vote",
+          "coalition talks",
+          "constitutional amendment",
+          "parliament dissolved",
+          "cabinet reshuffle"
+        ],
+        "indicators": [
+          "electoral commission",
+          "opposition boycott",
+          "election interference",
+          "constitutional court",
+          "emergency powers",
+          "political resignation",
+          "voter intimidation"
+        ],
+        "discovery": [
+          "election",
+          "government",
+          "parliament",
+          "politics"
+        ]
+      },
+      "diplomacy": {
+        "core": [
+          "peace talks",
+          "ceasefire talks",
+          "diplomatic dispute",
+          "ambassador recalled",
+          "diplomat expelled",
+          "bilateral agreement",
+          "diplomatic relations",
+          "peace agreement",
+          "summit meeting",
+          "treaty signed"
+        ],
+        "indicators": [
+          "diplomatic protest",
+          "foreign ministry statement",
+          "mediation effort",
+          "security dialogue",
+          "joint communique",
+          "consular warning"
+        ],
+        "discovery": [
+          "diplomacy",
+          "diplomatic",
+          "summit",
+          "negotiations"
+        ]
+      },
+      "crime": {
+        "core": [
+          "organised crime",
+          "organized crime",
+          "human trafficking",
+          "drug trafficking",
+          "arms trafficking",
+          "money laundering",
+          "criminal network",
+          "corruption investigation",
+          "smuggling operation",
+          "extortion scheme"
+        ],
+        "indicators": [
+          "illicit finance",
+          "cross-border smuggling",
+          "asset seizure",
+          "fraud investigation",
+          "police raid",
+          "criminal indictment",
+          "cartel violence"
+        ],
+        "discovery": [
+          "crime",
+          "trafficking",
+          "smuggling",
+          "corruption"
+        ]
+      },
+      "cyber": {
+        "core": [
+          "cyberattack",
+          "cyber attack",
+          "ransomware",
+          "data breach",
+          "denial of service",
+          "DDoS attack",
+          "credential theft",
+          "network intrusion",
+          "malware infection",
+          "supply-chain attack",
+          "cyber espionage",
+          "computer systems compromised"
+        ],
+        "indicators": [
+          "zero-day vulnerability",
+          "security vulnerability",
+          "phishing campaign",
+          "data exfiltration",
+          "malicious software",
+          "systems taken offline",
+          "critical security patch"
+        ],
+        "discovery": [
+          "cyber",
+          "hacking",
+          "malware",
+          "information security"
+        ]
+      },
+      "economic_sanctions": {
+        "core": [
+          "economic sanctions",
+          "sanctions package",
+          "sanctions evasion",
+          "export controls",
+          "trade embargo",
+          "asset freeze",
+          "sanctions imposed",
+          "sanctions lifted",
+          "import ban",
+          "export ban",
+          "sanctions list"
+        ],
+        "indicators": [
+          "trade restrictions",
+          "secondary sanctions",
+          "restricted goods",
+          "dual-use exports",
+          "tariff increase",
+          "investment screening",
+          "circumvention network"
+        ],
+        "discovery": [
+          "sanctions",
+          "trade",
+          "economy",
+          "tariffs"
+        ]
+      },
+      "energy": {
+        "core": [
+          "gas supply disruption",
+          "oil supply disruption",
+          "energy shortage",
+          "gas pipeline leak",
+          "power station outage",
+          "electricity shortage",
+          "refinery shutdown",
+          "fuel shortage",
+          "gas storage shortage",
+          "electricity interconnector"
+        ],
+        "indicators": [
+          "energy security",
+          "gas supply agreement",
+          "oil production cut",
+          "electricity rationing",
+          "nuclear plant shutdown",
+          "energy price spike",
+          "LNG terminal"
+        ],
+        "discovery": [
+          "energy",
+          "oil",
+          "natural gas",
+          "electricity"
+        ]
+      },
+      "maritime": {
+        "core": [
+          "ship collision",
+          "vessel grounding",
+          "port closure",
+          "shipping disruption",
+          "maritime incident",
+          "vessel seizure",
+          "piracy attack",
+          "tanker fire",
+          "cargo ship fire",
+          "navigation warning",
+          "shipping lane closure",
+          "coast guard rescue"
+        ],
+        "indicators": [
+          "AIS outage",
+          "GNSS interference",
+          "GPS jamming",
+          "navigation interference",
+          "anchor dragging",
+          "undersea cable damage",
+          "port congestion",
+          "suspected sabotage"
+        ],
+        "discovery": [
+          "shipping",
+          "maritime",
+          "vessel",
+          "port"
+        ]
+      },
+      "infrastructure": {
+        "core": [
+          "power outage",
+          "rail disruption",
+          "cable damage",
+          "pipeline leak",
+          "substation fire",
+          "power grid failure",
+          "undersea cable damage",
+          "bridge collapse",
+          "telecommunications outage",
+          "water supply disruption",
+          "railway sabotage",
+          "airport closure"
+        ],
+        "indicators": [
+          "critical infrastructure",
+          "cable repair",
+          "railway signalling failure",
+          "railway signaling failure",
+          "unexplained outage",
+          "infrastructure sabotage",
+          "service interruption"
+        ],
+        "discovery": [
+          "infrastructure",
+          "railway",
+          "power grid",
+          "disruption"
+        ]
+      },
+      "disaster_environment": {
+        "core": [
+          "earthquake",
+          "flash flood",
+          "river flooding",
+          "wildfire",
+          "severe storm",
+          "landslide",
+          "tsunami warning",
+          "industrial spill",
+          "chemical leak",
+          "extreme heat",
+          "drought emergency",
+          "environmental disaster"
+        ],
+        "indicators": [
+          "evacuation order",
+          "emergency shelter",
+          "pollution alert",
+          "flood warning",
+          "severe weather warning",
+          "toxic contamination",
+          "water scarcity"
+        ],
+        "discovery": [
+          "flood",
+          "climate",
+          "disaster",
+          "pollution"
+        ]
+      },
+      "health": {
+        "core": [
+          "disease outbreak",
+          "infectious disease outbreak",
+          "epidemic",
+          "pandemic",
+          "public health emergency",
+          "quarantine order",
+          "vaccine shortage",
+          "hospital outbreak",
+          "avian influenza",
+          "cholera outbreak"
+        ],
+        "indicators": [
+          "unexplained pneumonia",
+          "disease surveillance",
+          "human-to-human transmission",
+          "hospital capacity",
+          "novel pathogen",
+          "wastewater surveillance",
+          "vaccine recall"
+        ],
+        "discovery": [
+          "outbreak",
+          "public health",
+          "disease",
+          "health"
+        ]
+      },
+      "migration": {
+        "core": [
+          "refugee arrivals",
+          "asylum applications",
+          "forced displacement",
+          "border crossing closure",
+          "migrant boat",
+          "mass displacement",
+          "refugee camp",
+          "deportation order",
+          "migration agreement",
+          "asylum policy"
+        ],
+        "indicators": [
+          "human smuggling",
+          "reception capacity",
+          "border reception centre",
+          "temporary protection",
+          "humanitarian corridor",
+          "resettlement programme",
+          "resettlement program"
+        ],
+        "discovery": [
+          "migration",
+          "refugees",
+          "displacement",
+          "border"
+        ]
+      },
+      "technology": {
+        "core": [
+          "artificial intelligence regulation",
+          "semiconductor export controls",
+          "quantum computing breakthrough",
+          "critical technology export",
+          "chip manufacturing investment",
+          "AI safety assessment",
+          "satellite launch",
+          "technology supply chain",
+          "advanced semiconductor",
+          "telecommunications equipment restriction"
+        ],
+        "indicators": [
+          "dual-use technology",
+          "research collaboration",
+          "AI model release",
+          "industrial espionage",
+          "technology transfer",
+          "lithography equipment"
+        ],
+        "discovery": [
+          "technology",
+          "artificial intelligence",
+          "science",
+          "innovation"
+        ]
+      }
+    }
+  },
+  "optimized-v1": {
+    "label": "Optimized v1 \u2014 recall-tuned, single list",
+    "description": "Provisional baseline: batch 1 candidates from kwopt (cyber, armed_conflict, terrorism, civil_unrest, crime), without completed holdout validation. Other categories use expanded-v1 core+indicators pending evaluation after credit renewal. One list per category; not a verified coverage guarantee. Generated 2026-11-20.",
+    "events": {
+      "cyber": {
+        "core": [
+          "cyberattack",
+          "cyber attack",
+          "ransomware",
+          "data breach",
+          "denial of service",
+          "DDoS attack",
+          "credential theft",
+          "network intrusion",
+          "malware infection",
+          "supply-chain attack",
+          "cyber espionage",
+          "computer systems compromised",
+          "zero-day vulnerability",
+          "security vulnerability",
+          "phishing campaign",
+          "data exfiltration",
+          "malicious software",
+          "systems taken offline",
+          "critical security patch"
+        ]
+      },
+      "armed_conflict": {
+        "core": [
+          "armed conflict",
+          "airstrike",
+          "air strike",
+          "missile strike",
+          "drone strike",
+          "artillery fire",
+          "shelling",
+          "ceasefire violation",
+          "ground offensive",
+          "cross-border attack",
+          "combat operation",
+          "rocket attack",
+          "ceasefire",
+          "civilian casualties",
+          "military casualties",
+          "front line",
+          "evacuation order",
+          "munition strike"
+        ]
+      },
+      "terrorism": {
+        "core": [
+          "terrorist attack",
+          "terror plot",
+          "suicide bombing",
+          "car bombing",
+          "bomb attack",
+          "hostage taking",
+          "terrorism investigation",
+          "counterterrorism operation",
+          "improvised explosive device",
+          "extremist recruitment",
+          "terror financing",
+          "radicalisation",
+          "radicalization",
+          "violent extremism"
+        ]
+      },
+      "civil_unrest": {
+        "core": [
+          "mass protest",
+          "anti-government protest",
+          "civil unrest",
+          "riot police",
+          "violent demonstration",
+          "general strike",
+          "protest crackdown",
+          "state of emergency",
+          "protest march",
+          "demonstrators clashed",
+          "labour strike",
+          "labor strike",
+          "civil disobedience",
+          "protest arrests",
+          "curfew imposed",
+          "road blockade",
+          "student demonstration",
+          "madrid housing",
+          "anti-immigration",
+          "thetford"
+        ]
+      },
+      "crime": {
+        "core": [
+          "organised crime",
+          "organized crime",
+          "human trafficking",
+          "drug trafficking",
+          "arms trafficking",
+          "money laundering",
+          "criminal network",
+          "corruption investigation",
+          "smuggling operation",
+          "extortion scheme",
+          "illicit finance",
+          "cross-border smuggling",
+          "asset seizure",
+          "fraud investigation",
+          "police raid",
+          "criminal indictment",
+          "cartel violence"
+        ]
+      },
+      "military_activity": {
+        "core": [
+          "military exercise",
+          "naval exercise",
+          "troop deployment",
+          "military mobilisation",
+          "military mobilization",
+          "airspace violation",
+          "reservist call-up",
+          "military convoy",
+          "missile test",
+          "military manoeuvres",
+          "military maneuvers",
+          "military readiness",
+          "force posture",
+          "live-fire drill",
+          "defence procurement",
+          "defense procurement",
+          "military transport",
+          "air defence deployment",
+          "air defense deployment"
+        ]
+      },
+      "political": {
+        "core": [
+          "general election",
+          "presidential election",
+          "parliamentary election",
+          "election results",
+          "government collapse",
+          "no-confidence vote",
+          "coalition talks",
+          "constitutional amendment",
+          "parliament dissolved",
+          "cabinet reshuffle",
+          "electoral commission",
+          "opposition boycott",
+          "election interference",
+          "constitutional court",
+          "emergency powers",
+          "political resignation",
+          "voter intimidation"
+        ]
+      },
+      "diplomacy": {
+        "core": [
+          "peace talks",
+          "ceasefire talks",
+          "diplomatic dispute",
+          "ambassador recalled",
+          "diplomat expelled",
+          "bilateral agreement",
+          "diplomatic relations",
+          "peace agreement",
+          "summit meeting",
+          "treaty signed",
+          "diplomatic protest",
+          "foreign ministry statement",
+          "mediation effort",
+          "security dialogue",
+          "joint communique",
+          "consular warning"
+        ]
+      },
+      "economic_sanctions": {
+        "core": [
+          "economic sanctions",
+          "sanctions package",
+          "sanctions evasion",
+          "export controls",
+          "trade embargo",
+          "asset freeze",
+          "sanctions imposed",
+          "sanctions lifted",
+          "import ban",
+          "export ban",
+          "sanctions list",
+          "trade restrictions",
+          "secondary sanctions",
+          "restricted goods",
+          "dual-use exports",
+          "tariff increase",
+          "investment screening",
+          "circumvention network"
+        ]
+      },
+      "energy": {
+        "core": [
+          "gas supply disruption",
+          "oil supply disruption",
+          "energy shortage",
+          "gas pipeline leak",
+          "power station outage",
+          "electricity shortage",
+          "refinery shutdown",
+          "fuel shortage",
+          "gas storage shortage",
+          "electricity interconnector",
+          "energy security",
+          "gas supply agreement",
+          "oil production cut",
+          "electricity rationing",
+          "nuclear plant shutdown",
+          "energy price spike",
+          "LNG terminal"
+        ]
+      },
+      "maritime": {
+        "core": [
+          "ship collision",
+          "vessel grounding",
+          "port closure",
+          "shipping disruption",
+          "maritime incident",
+          "vessel seizure",
+          "piracy attack",
+          "tanker fire",
+          "cargo ship fire",
+          "navigation warning",
+          "shipping lane closure",
+          "coast guard rescue",
+          "AIS outage",
+          "GNSS interference",
+          "GPS jamming",
+          "navigation interference",
+          "anchor dragging",
+          "undersea cable damage",
+          "port congestion",
+          "suspected sabotage"
+        ]
+      },
+      "infrastructure": {
+        "core": [
+          "power outage",
+          "rail disruption",
+          "cable damage",
+          "pipeline leak",
+          "substation fire",
+          "power grid failure",
+          "undersea cable damage",
+          "bridge collapse",
+          "telecommunications outage",
+          "water supply disruption",
+          "railway sabotage",
+          "airport closure",
+          "critical infrastructure",
+          "cable repair",
+          "railway signalling failure",
+          "railway signaling failure",
+          "unexplained outage",
+          "infrastructure sabotage",
+          "service interruption"
+        ]
+      },
+      "disaster_environment": {
+        "core": [
+          "earthquake",
+          "flash flood",
+          "river flooding",
+          "wildfire",
+          "severe storm",
+          "landslide",
+          "tsunami warning",
+          "industrial spill",
+          "chemical leak",
+          "extreme heat",
+          "drought emergency",
+          "environmental disaster",
+          "evacuation order",
+          "emergency shelter",
+          "pollution alert",
+          "flood warning",
+          "severe weather warning",
+          "toxic contamination",
+          "water scarcity"
+        ]
+      },
+      "health": {
+        "core": [
+          "disease outbreak",
+          "infectious disease outbreak",
+          "epidemic",
+          "pandemic",
+          "public health emergency",
+          "quarantine order",
+          "vaccine shortage",
+          "hospital outbreak",
+          "avian influenza",
+          "cholera outbreak",
+          "unexplained pneumonia",
+          "disease surveillance",
+          "human-to-human transmission",
+          "hospital capacity",
+          "novel pathogen",
+          "wastewater surveillance",
+          "vaccine recall"
+        ]
+      },
+      "migration": {
+        "core": [
+          "refugee arrivals",
+          "asylum applications",
+          "forced displacement",
+          "border crossing closure",
+          "migrant boat",
+          "mass displacement",
+          "refugee camp",
+          "deportation order",
+          "migration agreement",
+          "asylum policy",
+          "human smuggling",
+          "reception capacity",
+          "border reception centre",
+          "temporary protection",
+          "humanitarian corridor",
+          "resettlement programme",
+          "resettlement program"
+        ]
+      },
+      "technology": {
+        "core": [
+          "artificial intelligence regulation",
+          "semiconductor export controls",
+          "quantum computing breakthrough",
+          "critical technology export",
+          "chip manufacturing investment",
+          "AI safety assessment",
+          "satellite launch",
+          "technology supply chain",
+          "advanced semiconductor",
+          "telecommunications equipment restriction",
+          "dual-use technology",
+          "research collaboration",
+          "AI model release",
+          "industrial espionage",
+          "technology transfer",
+          "lithography equipment"
+        ]
+      }
+    }
+  }
+}

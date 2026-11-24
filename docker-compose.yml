@@ -1,0 +1,43 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: intel
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-intel}
+      POSTGRES_DB: intel
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U intel"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  api:
+    build: .
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://intel:${POSTGRES_PASSWORD:-intel}@db:5432/intel
+    ports:
+      # Bound to localhost only: the app is reachable from this machine and nowhere else.
+      # To share with the team later, change to "${APP_PORT:-8080}:8080" (and set APP_PASSWORD).
+      - "127.0.0.1:${APP_PORT:-8080}:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  worker:
+    build: .
+    command: ["python", "-m", "app.worker"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://intel:${POSTGRES_PASSWORD:-intel}@db:5432/intel
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  pgdata:

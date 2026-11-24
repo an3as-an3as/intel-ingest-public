@@ -1,0 +1,31 @@
+# Credentials and local configuration (keep the safe template).
+.env
+.env.*
+!.env.example
+!.env.development.example
+*.pem
+*.key
+
+# Runtime data and database backups must never enter Git history.
+data/
+*.dump
+*.db
+*.sqlite
+*.sqlite3
+
+# Dependencies, bytecode and test/tool output.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+node_modules/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+coverage/
+*.log
+
+# Local operating-system files.
+.DS_Store

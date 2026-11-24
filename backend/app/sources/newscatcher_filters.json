@@ -1,0 +1,1051 @@
+{
+  "source_versions": {"news": "1.3.9", "v3": "3.26.0"},
+  "documentation": {
+    "news": "https://www.newscatcherapi.com/docs/news/filters",
+    "openapi": "https://github.com/NewscatcherAPI/docs/blob/main/api-reference/news-api/openapi.json",
+    "v3": "https://www.newscatcherapi.com/docs/news-api/api-reference/search/search-articles-get"
+  },
+  "modes": {
+    "search": {
+      "q": {
+        "type": "string",
+        "maxLength": 500,
+        "minLength": 1,
+        "description": "What to look for: keywords with AND/OR/NOT or a plain-language question, in any language. An upper-case `NOT` (`Apple NOT iPhone`, `NOT \"model y\"`) drops the articles whose headline, description or summary mention the term.",
+        "examples": [
+          "Tesla recall NOT Cybertruck"
+        ]
+      },
+      "effort": {
+        "type": "string",
+        "enum": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "description": "How much work goes into the ranking, and the price: `low` ranks by relevance, authority, coverage and freshness (1 NCC); `medium` adds a cross-encoder rerank of the top stories (5 NCC); `high` adds an LLM rerank and merges stories about the same event (10 NCC). Charged only when the search succeeds.",
+        "default": "medium",
+        "examples": [
+          "medium"
+        ]
+      },
+      "limit": {
+        "type": "integer",
+        "maximum": 100.0,
+        "minimum": 1.0,
+        "description": "Number of articles to return (1 to 100; a plan may allow fewer, e.g. 50 on Free: the request is refused with 403 above it).",
+        "default": 20,
+        "examples": [
+          20
+        ]
+      },
+      "collapse": {
+        "type": "string",
+        "enum": [
+          "diverse",
+          "story",
+          "duplicates"
+        ],
+        "description": "`diverse` (default) discounts repeated articles of one story, `story` keeps one article per story, `duplicates` keeps every article (copies of one article are always one result).",
+        "default": "diverse",
+        "examples": [
+          "diverse"
+        ]
+      },
+      "sort_by": {
+        "type": "string",
+        "enum": [
+          "relevancy",
+          "published_at",
+          "crawled_at"
+        ],
+        "description": "The order of the results: `relevancy` (default) best match first; `published_at` newest publication first; `crawled_at` newest crawl first. A date order covers the best matches of `q` (at least 100, or 5 times `limit`), not every article of the window, and `collapse=diverse` then keeps every article, as `duplicates` does. A publication date later than the crawl date counts as the crawl date.",
+        "default": "relevancy",
+        "examples": [
+          "relevancy"
+        ]
+      },
+      "search_window": {
+        "type": "string",
+        "pattern": "^\\s*\\d+(\\.\\d+)?\\s*[a-zA-Z]+\\s*$",
+        "description": "How far back to search, counted from now and measured on the publication date: a number and a unit, for example `15m`, `2h`, `1d`, `15 minutes`, `2 hours`, `1 day` or `1w`. From 1 minute up to your plan's history (30 days on the free plan; a longer request is cut to it and the response says `window.clamped`). Default: `7d`.",
+        "examples": [
+          "7d",
+          "2h",
+          "15m",
+          "1 day",
+          "2 hours",
+          "15 minutes"
+        ]
+      },
+      "sources": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "Comma-separated values.",
+            "examples": [
+              "reuters.com,bbc.co.uk"
+            ]
+          },
+          {
+            "items": {
+              "type": "string",
+              "description": "Domain of a publisher, e.g. `reuters.com`."
+            },
+            "type": "array",
+            "maxItems": 100,
+            "examples": [
+              [
+                "reuters.com",
+                "bbc.co.uk"
+              ]
+            ]
+          }
+        ],
+        "description": "Only search these publishers: domains, comma-separated or as an array (at most 100). Matches any copy of an article. The result then shows the requested domain: its name, and a link of that domain (with several matching domains on one article, the first of them in the article's order)."
+      },
+      "languages": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "Comma-separated values.",
+            "examples": [
+              "en,de"
+            ]
+          },
+          {
+            "items": {
+              "type": "string",
+              "pattern": "^[a-zA-Z]{2}$",
+              "description": "ISO 639-1 language code; Chinese is `cn` (simplified) or `tw` (traditional), `zh` means `cn`."
+            },
+            "type": "array",
+            "maxItems": 100,
+            "examples": [
+              [
+                "en",
+                "de"
+              ]
+            ]
+          }
+        ],
+        "description": "Only articles in these languages: ISO 639-1 codes, comma-separated or as an array (at most 100). `zh` is searched as `cn`."
+      },
+      "countries": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "Comma-separated values.",
+            "examples": [
+              "US,GB"
+            ]
+          },
+          {
+            "items": {
+              "type": "string",
+              "pattern": "^[a-zA-Z]{2}$",
+              "description": "ISO 3166-1 alpha-2 country code."
+            },
+            "type": "array",
+            "maxItems": 100,
+            "examples": [
+              [
+                "US",
+                "GB"
+              ]
+            ]
+          }
+        ],
+        "description": "Only articles from publishers in these countries: ISO 3166-1 alpha-2 codes, comma-separated or as an array (at most 100)."
+      },
+      "not_sources": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "Comma-separated values.",
+            "examples": [
+              "reuters.com,bbc.co.uk"
+            ]
+          },
+          {
+            "items": {
+              "type": "string",
+              "description": "Domain of a publisher, e.g. `reuters.com`."
+            },
+            "type": "array",
+            "maxItems": 100,
+            "examples": [
+              [
+                "reuters.com",
+                "bbc.co.uk"
+              ]
+            ]
+          }
+        ],
+        "description": "Leave out these publishers: domains, comma-separated or as an array (at most 100). An article is dropped when any of its copies comes from one of them."
+      },
+      "not_languages": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "Comma-separated values.",
+            "examples": [
+              "en,de"
+            ]
+          },
+          {
+            "items": {
+              "type": "string",
+              "pattern": "^[a-zA-Z]{2}$",
+              "description": "ISO 639-1 language code; Chinese is `cn` (simplified) or `tw` (traditional), `zh` means `cn`."
+            },
+            "type": "array",
+            "maxItems": 100,
+            "examples": [
+              [
+                "en",
+                "de"
+              ]
+            ]
+          }
+        ],
+        "description": "Leave out articles in these languages: ISO 639-1 codes, comma-separated or as an array (at most 100). `zh` is excluded as `cn`."
+      },
+      "not_countries": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "Comma-separated values.",
+            "examples": [
+              "US,GB"
+            ]
+          },
+          {
+            "items": {
+              "type": "string",
+              "pattern": "^[a-zA-Z]{2}$",
+              "description": "ISO 3166-1 alpha-2 country code."
+            },
+            "type": "array",
+            "maxItems": 100,
+            "examples": [
+              [
+                "US",
+                "GB"
+              ]
+            ]
+          }
+        ],
+        "description": "Leave out articles from publishers in these countries: ISO 3166-1 alpha-2 codes, comma-separated or as an array (at most 100)."
+      },
+      "min_newsrooms": {
+        "type": "integer",
+        "maximum": 1000.0,
+        "minimum": 0.0,
+        "description": "Only stories carried by at least this many newsrooms.",
+        "default": 0,
+        "examples": [
+          3
+        ]
+      },
+      "content_type": {
+        "type": "string",
+        "enum": [
+          "news",
+          "all"
+        ],
+        "description": "`news` (default) keeps real news articles only; `all` returns every article, whatever its type.",
+        "default": "news",
+        "examples": [
+          "news"
+        ]
+      },
+      "include": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "Comma-separated values.",
+            "examples": [
+              "entities,sentiment"
+            ]
+          },
+          {
+            "items": {
+              "type": "string",
+              "enum": [
+                "description",
+                "entities",
+                "sentiment",
+                "themes",
+                "translation",
+                "embedding"
+              ]
+            },
+            "type": "array",
+            "maxItems": 100,
+            "examples": [
+              [
+                "entities",
+                "sentiment"
+              ]
+            ]
+          }
+        ],
+        "description": "Heavy fields to add to every result, comma-separated or as an array: description, entities, sentiment, themes, translation, embedding. Enterprise accounts only (403 `enterprise_field` otherwise)."
+      }
+    },
+    "articles": {
+      "q": {
+        "type": "string",
+        "maxLength": 1000,
+        "minLength": 1,
+        "description": "The boolean query: `AND`, `OR`, `NOT`, parentheses, `\"exact phrases\"`, `+must`, `-mustnot`, `wild*cards` and `NEAR(\"a\", \"b\", 5)` (the words within 5 of each other). Terms and phrases are searched in the fields of `search_in`.",
+        "examples": [
+          "\"interest rate\" AND (cut OR hike) NOT crypto"
+        ]
+      },
+      "search_in": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "Comma-separated values.",
+            "examples": [
+              "title_body"
+            ]
+          },
+          {
+            "items": {
+              "type": "string",
+              "enum": [
+                "title",
+                "body",
+                "title_body",
+                "summary",
+                "title_translated",
+                "body_translated",
+                "title_body_translated",
+                "summary_translated"
+              ]
+            },
+            "type": "array",
+            "maxItems": 2,
+            "examples": [
+              [
+                "title",
+                "summary"
+              ]
+            ]
+          }
+        ],
+        "description": "Where `q` is searched, comma-separated or as an array (at most 2): `title`, `body`, `title_body` (default), `summary`, and the same on the English translation: `title_translated`, `body_translated`, `title_body_translated`, `summary_translated`. A match anywhere in the article counts; the response carries the fields listed in `results`."
+      },
+      "from_date": {
+        "type": "string",
+        "description": "Start of the window: ISO 8601 (`2026-10-03`, `2026-10-03T14:00:00`, with or without an offset; UTC otherwise) or a phrase such as `7 days ago`. Default: midnight 7 days ago. Up to 365 days back (an earlier start is cut to it and the response says `window.clamped`).",
+        "examples": [
+          "2026-10-03",
+          "2026-10-03 14:00:00",
+          "7 days ago"
+        ]
+      },
+      "to_date": {
+        "type": "string",
+        "description": "End of the window, in the same formats. Default: the moment of the request. The response returns it in `window.to`: send it back when paging, so every page covers the same articles.",
+        "examples": [
+          "2026-10-03",
+          "2026-10-03 14:00:00",
+          "7 days ago"
+        ]
+      },
+      "sources": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "Comma-separated values.",
+            "examples": [
+              "reuters.com,bbc.co.uk"
+            ]
+          },
+          {
+            "items": {
+              "type": "string",
+              "description": "Domain of a publisher, e.g. `reuters.com`."
+            },
+            "type": "array",
+            "maxItems": 100,
+            "examples": [
+              [
+                "reuters.com",
+                "bbc.co.uk"
+              ]
+            ]
+          }
+        ],
+        "description": "Only these publishers: domains, comma-separated or as an array (at most 100). A domain with a subdomain (`news.bbc.co.uk`) matches that subdomain only."
+      },
+      "not_sources": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "Comma-separated values.",
+            "examples": [
+              "reuters.com,bbc.co.uk"
+            ]
+          },
+          {
+            "items": {
+              "type": "string",
+              "description": "Domain of a publisher, e.g. `reuters.com`."
+            },
+            "type": "array",
+            "maxItems": 100,
+            "examples": [
+              [
+                "reuters.com",
+                "bbc.co.uk"
+              ]
+            ]
+          }
+        ],
+        "description": "Leave out these publishers: domains, comma-separated or as an array (at most 100). Only bare domains (`cnn.com`) leave anything out; a list made of subdomains only (`edition.cnn.com`) excludes nothing."
+      },
+      "predefined_sources": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "Comma-separated values.",
+            "examples": [
+              "top 100 US"
+            ]
+          },
+          {
+            "items": {
+              "type": "string",
+              "pattern": "^top \\d+ ([A-Za-z]{2}|global)",
+              "description": "`top <n> <country code>` or `top <n> global`."
+            },
+            "type": "array",
+            "maxItems": 100,
+            "examples": [
+              [
+                "top 100 US",
+                "top 50 global"
+              ]
+            ]
+          }
+        ],
+        "description": "Only the best-ranked publishers of a country or of the world: `top <n> <country code>` or `top <n> global`, for example `top 100 US`; combined with `sources`."
+      },
+      "languages": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "Comma-separated values.",
+            "examples": [
+              "en,de"
+            ]
+          },
+          {
+            "items": {
+              "type": "string",
+              "pattern": "^[a-zA-Z]{2}$",
+              "description": "ISO 639-1 language code; Chinese is `cn` (simplified) and `tw` (traditional), `zh` means both."
+            },
+            "type": "array",
+            "maxItems": 100,
+            "examples": [
+              [
+                "en",
+                "de"
+              ]
+            ]
+          }
+        ],
+        "description": "Only articles in these languages: ISO 639-1 codes, comma-separated or as an array (at most 100). `zh` means `cn` and `tw`."
+      },
+      "not_languages": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "Comma-separated values.",
+            "examples": [
+              "en,de"
+            ]
+          },
+          {
+            "items": {
+              "type": "string",
+              "pattern": "^[a-zA-Z]{2}$",
+              "description": "ISO 639-1 language code; Chinese is `cn` (simplified) and `tw` (traditional), `zh` means both."
+            },
+            "type": "array",
+            "maxItems": 100,
+            "examples": [
+              [
+                "en",
+                "de"
+              ]
+            ]
+          }
+        ],
+        "description": "Leave out articles in these languages: ISO 639-1 codes, comma-separated or as an array (at most 100). `zh` means `cn` and `tw`."
+      },
+      "countries": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "Comma-separated values.",
+            "examples": [
+              "US,GB"
+            ]
+          },
+          {
+            "items": {
+              "type": "string",
+              "pattern": "^[a-zA-Z]{2}$",
+              "description": "ISO 3166-1 alpha-2 country code."
+            },
+            "type": "array",
+            "maxItems": 100,
+            "examples": [
+              [
+                "US",
+                "GB"
+              ]
+            ]
+          }
+        ],
+        "description": "Only articles from publishers in these countries: ISO 3166-1 alpha-2 codes, comma-separated or as an array (at most 100). Ignored when `sources` is set."
+      },
+      "not_countries": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "Comma-separated values.",
+            "examples": [
+              "US,GB"
+            ]
+          },
+          {
+            "items": {
+              "type": "string",
+              "pattern": "^[a-zA-Z]{2}$",
+              "description": "ISO 3166-1 alpha-2 country code."
+            },
+            "type": "array",
+            "maxItems": 100,
+            "examples": [
+              [
+                "US",
+                "GB"
+              ]
+            ]
+          }
+        ],
+        "description": "Leave out articles from publishers in these countries: ISO 3166-1 alpha-2 codes, comma-separated or as an array (at most 100). Ignored when `sources` is set."
+      },
+      "sort_by": {
+        "type": "string",
+        "enum": [
+          "published_at",
+          "-published_at",
+          "relevancy",
+          "rank"
+        ],
+        "description": "The order of the results: `published_at` (default) newest first, `-published_at` oldest first, `relevancy` best match first, `rank` best-ranked publisher first.",
+        "default": "published_at",
+        "examples": [
+          "published_at"
+        ]
+      },
+      "page": {
+        "type": "integer",
+        "maximum": 1000.0,
+        "minimum": 1.0,
+        "description": "Page number, from 1. `page` x `page_size` is at most 1,000: a query returns up to its first 1,000 articles.",
+        "default": 1,
+        "examples": [
+          1
+        ]
+      },
+      "page_size": {
+        "type": "integer",
+        "maximum": 100.0,
+        "minimum": 1.0,
+        "description": "Articles per page (1 to 100; a plan may allow fewer: the request is refused with 403 above it).",
+        "default": 100,
+        "examples": [
+          100
+        ]
+      },
+      "ranked_only": {
+        "type": "boolean",
+        "description": "Only articles from publishers that have a rank.",
+        "default": false,
+        "examples": [
+          true
+        ]
+      },
+      "from_rank": {
+        "type": "integer",
+        "maximum": 999999.0,
+        "minimum": 1.0,
+        "description": "Only publishers ranked at this position or lower (a larger number): the rank is the publisher's traffic rank, 1 being the best. 1 to 999999. Combined with `sources`, an article that matches either passes.",
+        "examples": [
+          1000
+        ]
+      },
+      "to_rank": {
+        "type": "integer",
+        "maximum": 999999.0,
+        "minimum": 1.0,
+        "description": "Only publishers ranked at this position or better (a smaller number). 1 to 999999.",
+        "examples": [
+          1000
+        ]
+      },
+      "word_count_min": {
+        "type": "integer",
+        "maximum": 1000000.0,
+        "minimum": 0.0,
+        "description": "Only articles of at least this many words (`0` is a filter too: articles without a word count are left out); must be lower than `word_count_max`.",
+        "examples": [
+          500
+        ]
+      },
+      "word_count_max": {
+        "type": "integer",
+        "maximum": 1000000.0,
+        "minimum": 0.0,
+        "description": "Only articles of at most this many words.",
+        "examples": [
+          500
+        ]
+      },
+      "exclude_duplicates": {
+        "type": "boolean",
+        "description": "Leave out copies of an article that another publisher published first. Off by default: the endpoint returns every match. Needs a window that starts after 2024-05-13 for English only (`languages=en`) and after 2025-03-17 otherwise.",
+        "default": false,
+        "examples": [
+          true
+        ]
+      }
+    },
+    "v3": {
+      "q": {
+        "type": "string",
+        "description": "The keyword(s) to search for in articles. Query syntax supports logical operators (`AND`, `OR`, `NOT`) and wildcards:\n\n- For exact phrases, use escaped quotes: `\\\"technology news\\\"`\n- Use `*` for wildcards: `technolog*` (cannot start with `*`)\n- Use `+` to include and `-` to exclude: `+Apple`, `-Google`\n- Boolean operators: `technology AND (Apple OR Microsoft) NOT Google`\n- Forbidden characters: `[` `]` `/` `\\\\` `:` `^` and URL-encoded equivalents\n\n**Note:** The API automatically inserts `AND` operators between standalone terms, so strings like `\"machine learning\"` become `\"machine AND learning\"`. To avoid syntax errors (especially in queries with `OR` operators), use literal escape `\"\\\"machine learning\\\"\"`.\n\nFor detailed syntax rules, see [Advanced querying](https://www.newscatcherapi.com/docs/news-api/guides-and-concepts/advanced-querying).\n",
+        "example": "\"supply chain\" AND Amazon NOT China"
+      },
+      "search_in": {
+        "type": "string",
+        "default": "title_content",
+        "description": "The article fields to search in. Use a comma-separated string for multiple options, with a maximum of 2 in a single request.\n\nAvailable options: \n- Standard fields: `title`, `content`, `summary`, `title_content`\n- Translation fields: `title_translated`, `content_translated`, `summary_translated`, `title_content_translated`\n",
+        "example": "title_content, title_content_translated",
+        "x-options": [
+          "title",
+          "content",
+          "summary",
+          "title_content",
+          "title_translated",
+          "content_translated",
+          "summary_translated",
+          "title_content_translated"
+        ]
+      },
+      "include_translation_fields": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, includes English translation fields in the response (`title_translated_en`, `content_translated_en`, and NLP translation fields).\n",
+        "example": true
+      },
+      "predefined_sources": {
+        "type": "string",
+        "example": "top 50 US, top 20 GB",
+        "description": "Predefined top news sources per country. \n\nFormat: start with the word `top`, followed by the number of desired sources, and then the two-letter country code [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). \n\nMultiple countries with the number of top sources can be specified as a comma-separated string.\n"
+      },
+      "source_groups": {
+        "type": "string",
+        "example": "top_100_financial_news,wires_news_agencies_global",
+        "description": "Restricts the search to one or more source groups, given by slug. A source group is a ready-made list of publisher domains that the NewsCatcher team curates for a common use case, for example `top_100_financial_news` or `financial_regulators_central_banks`. Use it instead of listing the domains yourself in `sources`. To specify multiple groups, use a comma-separated string. You can pass up to 20 groups.\n\nTo see the available groups, call [List source groups](https://www.newscatcherapi.com/docs/news-api/api-reference/source-groups/list-source-groups-get).\n\n**Note**: The domains of all groups are merged with `sources` and `predefined_sources`, so you can add your own domains on top of a group. As with `sources`, the `countries` and `not_countries` filters are ignored when `source_groups` is set. An unknown slug returns a `422` error.\n"
+      },
+      "source_name": {
+        "type": "string",
+        "example": "sport,tech",
+        "description": "Word or phrase to search within the source names. To specify multiple values, use a comma-separated string.\n\n**Note**: The search doesn't require an exact match and returns sources containing the specified terms in their names. You can use any word or phrase, like `\"sport\"` or `\"new york times\"`. \n\nFor example, `\"sport\"` returns sources such as `\"Motorsport\"`, `\"Dot Esport\"`, and `\"Tuttosport\"`.\n"
+      },
+      "sources": {
+        "type": "string",
+        "example": "nytimes.com,finance.yahoo.com",
+        "description": "One or more news sources to narrow down the search. The format must be a domain URL. Subdomains, such as `finance.yahoo.com`, are also acceptable.To specify multiple sources, use a comma-separated string.\n"
+      },
+      "not_sources": {
+        "type": "string",
+        "example": "cnn.com,wsj.com",
+        "description": "The news sources to exclude from the search. To exclude multiple sources, use a comma-separated string.\n"
+      },
+      "lang": {
+        "type": "string",
+        "example": "en,es",
+        "description": "The language(s) of the search. The only accepted format is the two-letter [ISO 639-1](https://en.wikipedia.org/wiki/ISO_639-1) code. To select multiple languages, use a comma-separated string.\n\nTo learn more, see [Enumerated parameters > Language](https://www.newscatcherapi.com/docs/news-api/api-reference/enumerated-parameters#language-lang-and-not-lang).\n"
+      },
+      "not_lang": {
+        "type": "string",
+        "example": "fr,de",
+        "description": "The language(s) to exclude from the search. The accepted format is the two-letter [ISO 639-1](https://en.wikipedia.org/wiki/ISO_639-1) code. To exclude multiple languages, use a comma-separated string. \n\nTo learn more, see [Enumerated parameters > Language](https://www.newscatcherapi.com/docs/news-api/api-reference/enumerated-parameters#language-lang-and-not-lang).\n"
+      },
+      "countries": {
+        "type": "string",
+        "example": "US,CA",
+        "description": "The countries where the news publisher is located. The accepted format is the two-letter [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code. To select multiple countries, use a comma-separated string.\n\nTo learn more, see [Enumerated parameters > Country](https://www.newscatcherapi.com/docs/news-api/api-reference/enumerated-parameters#country-country-and-not-country).\n"
+      },
+      "not_countries": {
+        "type": "string",
+        "example": "UK,FR",
+        "description": "The publisher location countries to exclude from the search. The accepted format is the two-letter [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code. To exclude multiple countries, use a comma-separated string. \n\nTo learn more, see [Enumerated parameters > Country](https://www.newscatcherapi.com/docs/news-api/api-reference/enumerated-parameters#country-country-and-not-country).\n"
+      },
+      "not_author_name": {
+        "type": "string",
+        "example": "John Doe, Jane Doe",
+        "description": "The list of author names to exclude from your search. To exclude articles by specific authors, use a comma-separated string.\n"
+      },
+      "from_": {
+        "default": "7 days ago",
+        "description": "The starting point in time to search from. Accepts date-time strings in ISO 8601 format and plain text strings. The default time zone is UTC. \n\nFormats with examples:\n- YYYY-mm-ddTHH:MM:SS: `2024-07-01T00:00:00`\n- YYYY-MM-dd: `2024-07-01`\n- YYYY/mm/dd HH:MM:SS: `2024/07/01 00:00:00`\n- YYYY/mm/dd: `2024/07/01`\n- English phrases: `7 day ago`, `today`\n- Duration shorthand: `7d`, `30d`, `24h`, `48h`\n\n**Note**: By default, applied to the publication date of the article. To use the article's parse date instead, set the `by_parse_date` parameter to `true`.\n",
+        "example": "2021/01/01",
+        "type": "string"
+      },
+      "to_": {
+        "description": "The ending point in time to search up to. Accepts date-time strings in ISO 8601 format and plain text strings. The default time zone is UTC. \n\nFormats with examples:\n- YYYY-mm-ddTHH:MM:SS: `2024-07-01T00:00:00`\n- YYYY-MM-dd: `2024-07-01`\n- YYYY/mm/dd HH:MM:SS: `2024/07/01 00:00:00`\n- YYYY/mm/dd: `2024/07/01`\n- English phrases: `1 day ago`, `now`\n- Duration shorthand: `7d`, `30d`, `24h`, `48h`\n\n**Note**: By default, applied to the publication date of the article. To use the article's parse date instead, set the `by_parse_date` parameter to `true`.\n",
+        "default": "now",
+        "type": "string"
+      },
+      "published_date_precision": {
+        "type": "string",
+        "description": "The precision of the published date. There are three types:\n- `full`: The day and time of an article is correctly identified with the appropriate timezone.\n- `timezone unknown`: The day and time of an article is correctly identified without timezone.\n- `date`: Only the day is identified without an exact time.\n",
+        "example": "full"
+      },
+      "by_parse_date": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, the `from_` and `to_` parameters use article parse dates instead of published dates. Additionally, the `parse_date` variable is added to the output for each article object.\n\nIn the Aggregation count endpoint, the articles are also counted per interval by their parse date.\n",
+        "example": true
+      },
+      "sort_by": {
+        "type": "string",
+        "enum": [
+          "relevancy",
+          "date",
+          "rank"
+        ],
+        "default": "relevancy",
+        "description": "The sorting order of the results. Possible values are:\n- `relevancy`: The most relevant results first.\n- `date`: The most recently published results first.\n- `rank`: The results from the highest-ranked sources first.\n",
+        "example": "date"
+      },
+      "ranked_only": {
+        "type": "boolean",
+        "default": true,
+        "description": "If true, limits the search to sources ranked in the top 1 million online websites. If false, includes unranked sources which are assigned a rank of 999999.\n",
+        "example": true
+      },
+      "from_rank": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 999999,
+        "default": 1,
+        "format": "int32",
+        "description": "The lowest boundary of the rank of a news website to filter by. A lower rank indicates a more popular source.\n",
+        "example": 100
+      },
+      "to_rank": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 999999,
+        "default": 999999,
+        "format": "int32",
+        "description": "The highest boundary of the rank of a news website to filter by. A lower rank indicates a more popular source.\n",
+        "example": 100
+      },
+      "is_headline": {
+        "type": "boolean",
+        "description": "If true, only returns articles that were posted on the home page of a given news domain.\n",
+        "example": true
+      },
+      "is_opinion": {
+        "type": "boolean",
+        "description": "If true, returns only opinion pieces. If false, excludes opinion-based articles and returns news only.\n",
+        "example": true
+      },
+      "is_paid_content": {
+        "type": "boolean",
+        "description": "Filters articles by content completeness.\n\nIf false, returns only articles for which full-text content is publicly available. If true, returns all indexed articles, including those where only partial content is publicly available (e.g., headlines, summaries, or preview paragraphs from paywalled sources).\n\n**Note**: NewsCatcher indexes content that is publicly accessible and available for crawling in accordance with publisher access controls (e.g., robots.txt and similar mechanisms). For paywalled sources, only content that publishers make publicly available (such as headlines, summaries, or preview text) is indexed. NewsCatcher does not bypass paywalls, authentication systems, or other technical access restrictions.\n",
+        "example": false
+      },
+      "parent_url": {
+        "type": "string",
+        "example": "wsj.com/politics,wsj.com/tech",
+        "description": "The categorical URL(s) to filter your search. To filter your search by multiple categorical URLs, use a comma-separated string.\n"
+      },
+      "all_links": {
+        "type": "string",
+        "example": "https://aiindex.stanford.edu/report,https://www.stateof.ai",
+        "description": "The complete URL(s) mentioned in the article. For multiple URLs, use a comma-separated string.\n\nFor more details, see [Search by URL](https://www.newscatcherapi.com/docs/news-api/how-to/search-by-url).\n"
+      },
+      "all_domain_links": {
+        "type": "string",
+        "example": "who.int,nih.gov",
+        "description": "The domain(s) mentioned in the article. For multiple domains, use a comma-separated string.\n\nFor more details, see [Search by URL](https://www.newscatcherapi.com/docs/news-api/how-to/search-by-url).\n"
+      },
+      "all_links_text": {
+        "type": "string",
+        "example": "Nvidia,Tesla",
+        "description": "The text content of links mentioned in the article. Searches for links where the anchor text contains the specified terms. For multiple terms, use a comma-separated string.\n\n**Note**: When this parameter is used, the response includes the `all_links_data` field with detailed link information.\n\nTo learn more, see [Search by URL](https://www.newscatcherapi.com/docs/news-api/how-to/search-by-url).\n"
+      },
+      "additional_domain_info": {
+        "type": "boolean",
+        "description": "If true, includes additional domain information in the response for each article:\n- `is_news_domain`: Boolean indicating if the source is a news domain.\n- `news_domain_type`: Type of news domain (e.g., `\"Original Content\"`).\n- `news_type`: Category of news (e.g., `\"News and Blogs\"`).\n",
+        "example": true
+      },
+      "is_news_domain": {
+        "type": "boolean",
+        "description": "If true, filters results to include only news domains.\n",
+        "example": true
+      },
+      "news_domain_type": {
+        "oneOf": [
+          {
+            "type": "string",
+            "example": "Original Content,Aggregator"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Original Content",
+                "Aggregator",
+                "Press Releases",
+                "Republisher",
+                "Other"
+              ]
+            },
+            "example": [
+              "Original Content",
+              "Aggregator"
+            ]
+          }
+        ],
+        "description": "Filters results based on the news domain type. Multiple types can be specified using a comma-separated string or an array of strings. Possible values are:\n- `Original Content`: Sources that produce their own content.\n- `Aggregator`: Sources that collect content from various other sources.\n- `Press Releases`: Sources primarily publishing press releases.\n- `Republisher`: Sources that republish content from other sources.\n- `Other`: Sources that don't fit into main categories.\n",
+        "example": "Original Content"
+      },
+      "news_type": {
+        "type": "string",
+        "description": "Filters results based on the news type. Multiple types can be specified using a comma-separated string.\n\nFor a complete list of available news types, see [Enumerated parameters > News type](https://www.newscatcherapi.com/docs/news-api/api-reference/enumerated-parameters#news-type-news-type).\n"
+      },
+      "word_count_min": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "The minimum number of words an article must contain. To be used for avoiding articles with small content.\n",
+        "example": 300
+      },
+      "word_count_max": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "The maximum number of words an article can contain. \nTo be used for avoiding articles with large content.\n",
+        "example": 1000
+      },
+      "page": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 1,
+        "description": "The page number to scroll through the results. Use for pagination, as a single API response can return up to 1,000 articles. \n\nFor details, see [Retrieve large datasets](https://www.newscatcherapi.com/docs/news-api/how-to/retrieve-more-than-10k-articles)\n",
+        "example": 2
+      },
+      "page_size": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 1000,
+        "default": 100,
+        "description": "The number of articles to return per page.\n",
+        "example": 50
+      },
+      "clustering_enabled": {
+        "type": "boolean",
+        "default": false,
+        "description": "Determines whether to group similar articles into clusters. If true, the API returns clustered results.\n\nTo learn more, see [Clustering news articles](https://www.newscatcherapi.com/docs/news-api/guides-and-concepts/clustering-news-articles).\n",
+        "example": true
+      },
+      "clustering_variable": {
+        "type": "string",
+        "enum": [
+          "content",
+          "title",
+          "summary"
+        ],
+        "default": "content",
+        "deprecated": true,
+        "description": "**Deprecated from January 1, 2026 onward.** For articles published on or after 2026-01-01, this parameter is ignored. Clustering always uses a combined `title + content` embedding generated by the Qwen3-Embedding-0.6B model, regardless of the value supplied.\n\nFor articles published before 2026-01-01, this parameter remains functional and specifies which part of the article to use for clustering:\n- `content`: Uses the full article content (default).\n- `title`: Uses only the article title.\n- `summary`: Uses the article summary.\n\nTo learn more, see [Clustering news articles](https://www.newscatcherapi.com/docs/news-api/guides-and-concepts/clustering-news-articles).\n",
+        "example": "content"
+      },
+      "clustering_threshold": {
+        "type": "number",
+        "format": "float",
+        "exclusiveMinimum": 0,
+        "maximum": 1,
+        "default": 0.7,
+        "description": "Sets the similarity threshold for grouping articles into clusters. A lower value creates more inclusive clusters, while a higher value requires greater similarity between articles.\n\nFor example:\n- `0.6`: Results in larger, more diverse clusters.\n- `0.7`: Balances cluster size and article similarity (default).\n- `0.8`: Creates smaller, tightly related clusters.\n\nTo learn more, see [Clustering news articles](https://www.newscatcherapi.com/docs/news-api/guides-and-concepts/clustering-news-articles).\n",
+        "example": 0.7
+      },
+      "include_nlp_data": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, includes an NLP object for each article in the response. This object provides results of NLP analysis, including article theme, summary, sentiment, tags, and named entity recognition if available.\n\n**Note**: NLP data is only available for articles indexed from July 2023 onward. For articles indexed before July 2023, the `nlp` field is returned as an empty object `{}`.\n\nTo learn more, see [NLP Enrichments](https://www.newscatcherapi.com/docs/news-api/guides-and-concepts/nlp-enrichments).\n",
+        "example": true
+      },
+      "has_nlp": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, filters results to include only articles that have NLP data.\n\n**Note**: NLP data is only available for articles indexed from July 2023 onward. Applying this filter to a date range that predates July 2023 returns zero results.\n\nTo learn more, see [NLP Enrichments](https://www.newscatcherapi.com/docs/news-api/guides-and-concepts/nlp-enrichments).\n",
+        "example": true
+      },
+      "theme": {
+        "type": "string",
+        "example": "Finance,Tech",
+        "description": "Filters articles based on their general topic, as determined by NLP analysis. To select multiple themes, use a comma-separated string.\n\nTo learn more, see [NLP Enrichments](https://www.newscatcherapi.com/docs/news-api/guides-and-concepts/nlp-enrichments).\n\nAvailable options: `Business`, `Economics`, `Entertainment`, `Finance`, `Health`, `Politics`, `Science`, `Sports`, `Tech`, `Crime`, `Financial Crime`, `Lifestyle`, `Automotive`, `Travel`, `Weather`, `General`.\n",
+        "x-options": [
+          "Business",
+          "Economics",
+          "Entertainment",
+          "Finance",
+          "Health",
+          "Politics",
+          "Science",
+          "Sports",
+          "Tech",
+          "Crime",
+          "Financial Crime",
+          "Lifestyle",
+          "Automotive",
+          "Travel",
+          "Weather",
+          "General"
+        ]
+      },
+      "not_theme": {
+        "type": "string",
+        "example": "Crime,Sports",
+        "description": "Inverse of the `theme` parameter. Excludes articles based on their general topic, as determined by NLP analysis. To exclude multiple themes, use a comma-separated string.\n\nTo learn more, see [NLP Enrichments](https://www.newscatcherapi.com/docs/news-api/guides-and-concepts/nlp-enrichments).\n",
+        "x-options": [
+          "Business",
+          "Economics",
+          "Entertainment",
+          "Finance",
+          "Health",
+          "Politics",
+          "Science",
+          "Sports",
+          "Tech",
+          "Crime",
+          "Financial Crime",
+          "Lifestyle",
+          "Automotive",
+          "Travel",
+          "Weather",
+          "General"
+        ]
+      },
+      "content_type": {
+        "type": "string",
+        "example": "news",
+        "description": "Filters articles by content type: the kind of page an article is, as determined by NLP analysis. To select multiple content types, use a comma-separated string. Values are case-insensitive, and an article is returned if it matches any of them.\n\nAvailable options: `news_report`, `analysis`, `interview`, `opinion`, `press_release`, `listicle`, `service`, `commerce`, `review`, `autogen`, `seo_spam`, `obituary`, `ugc`, `non_article`. Shortcuts: `news` selects `news_report`, `analysis`, and `interview`; `all` applies no filter.\n\n**Note**: Articles without a content type label are excluded whenever `content_type` is set. An unknown value returns a `422` error.\n\nTo learn more, see [Content types](https://www.newscatcherapi.com/docs/news-api/guides-and-concepts/content-types).\n"
+      },
+      "ORG_entity_name": {
+        "type": "string",
+        "description": "Filters articles that mention specific organization names, as identified by NLP analysis. \n\n- To specify multiple organizations, use `AND`, `OR`, `NOT` operators, and `\\\"` escape literals for exact matches. \n- To search in translations, combine with the translation options of the `search_in` parameter (e.g., `title_content_translated`).\n\nTo learn more, see [Search by entity](https://www.newscatcherapi.com/docs/news-api/how-to/search-by-entity).\n",
+        "example": "\"Apple Inc\" OR Microsoft"
+      },
+      "PER_entity_name": {
+        "type": "string",
+        "description": "Filters articles that mention specific person names, as identified by NLP analysis. \n\n- To specify multiple names, use `AND`, `OR`, `NOT` operators, and `\\\"` escape literals for exact matches. \n- To search in translations, combine with the translation options of the `search_in` parameter (e.g., `title_content_translated`).\n\nTo learn more, see [Search by entity](https://www.newscatcherapi.com/docs/news-api/how-to/search-by-entity).\n",
+        "example": "\"Elon Musk\" OR \"Jeff Bezos\""
+      },
+      "LOC_entity_name": {
+        "type": "string",
+        "description": "Filters articles that mention specific location names, as identified by NLP analysis.\n\n- To specify multiple locations, use `AND`, `OR`, `NOT` operators, and `\\\"` escape literals for exact matches. \n- To search in translations, combine with the translation options of the `search_in` parameter (e.g., `title_content_translated`).\n\nTo learn more, see [Search by entity](https://www.newscatcherapi.com/docs/news-api/how-to/search-by-entity).\n",
+        "example": "\"San Francisco\" OR \"New York City\""
+      },
+      "MISC_entity_name": {
+        "type": "string",
+        "description": "Filters articles that mention other named entities not falling under person, organization, or location categories. Includes events, nationalities, products, works of art, and more.\n\n- To specify multiple entities, use `AND`, `OR`, `NOT` operators, and `\\\"` escape literals for exact matches. \n- To search in translations, combine with the translation options of the `search_in` parameter (e.g., `title_content_translated`).\n\nTo learn more, see [Search by entity](https://www.newscatcherapi.com/docs/news-api/how-to/search-by-entity).\n",
+        "example": "AWS OR \"Microsoft Azure\""
+      },
+      "title_sentiment_min": {
+        "type": "number",
+        "format": "float",
+        "minimum": -1,
+        "maximum": 1,
+        "description": "Filters articles based on the minimum sentiment score of their titles.\n\nRange is `-1.0` to `1.0`, where:\n- Negative values indicate negative sentiment.\n- Positive values indicate positive sentiment.\n- Values close to 0 indicate neutral sentiment.\n\nTo learn more, see [NLP Enrichments](https://www.newscatcherapi.com/docs/news-api/guides-and-concepts/nlp-enrichments).\n",
+        "example": -0.5
+      },
+      "title_sentiment_max": {
+        "type": "number",
+        "format": "float",
+        "minimum": -1,
+        "maximum": 1,
+        "description": "Filters articles based on the maximum sentiment score of their titles.\n\nRange is `-1.0` to `1.0`, where:\n- Negative values indicate negative sentiment.\n- Positive values indicate positive sentiment.\n- Values close to 0 indicate neutral sentiment.\n\nTo learn more, see [NLP Enrichments](https://www.newscatcherapi.com/docs/news-api/guides-and-concepts/nlp-enrichments).\n",
+        "example": 0.5
+      },
+      "content_sentiment_min": {
+        "type": "number",
+        "format": "float",
+        "minimum": -1,
+        "maximum": 1,
+        "description": "Filters articles based on the minimum sentiment score of their content.\n\nRange is `-1.0` to `1.0`, where:\n- Negative values indicate negative sentiment.\n- Positive values indicate positive sentiment.\n- Values close to 0 indicate neutral sentiment.\n\nTo learn more, see [NLP Enrichments](https://www.newscatcherapi.com/docs/news-api/guides-and-concepts/nlp-enrichments).\n",
+        "example": -0.5
+      },
+      "content_sentiment_max": {
+        "type": "number",
+        "format": "float",
+        "minimum": -1,
+        "maximum": 1,
+        "description": "Filters articles based on the maximum sentiment score of their content.\n\nRange is `-1.0` to `1.0`, where:\n- Negative values indicate negative sentiment.\n- Positive values indicate positive sentiment.\n- Values close to 0 indicate neutral sentiment.\n\nTo learn more, see [NLP Enrichments](https://www.newscatcherapi.com/docs/news-api/guides-and-concepts/nlp-enrichments).\n",
+        "example": 0.5
+      },
+      "iptc_tags": {
+        "type": "string",
+        "example": "20000199,20000209",
+        "description": "Filters articles based on International Press Telecommunications Council (IPTC) media topic tags. To specify multiple IPTC tags, use a comma-separated string of tag IDs. \n\n**Note**: The `iptc_tags` parameter is only available in the `v3_nlp_iptc_tags` subscription plan.\n\nTo learn more, see [IPTC Media Topic NewsCodes](https://www.iptc.org/std/NewsCodes/treeview/mediatopic/mediatopic-en-GB.html).\n"
+      },
+      "not_iptc_tags": {
+        "type": "string",
+        "example": "20000205,20000209",
+        "description": "Inverse of the `iptc_tags` parameter. Excludes articles based on International Press Telecommunications Council (IPTC) media topic tags. To specify multiple IPTC tags to exclude, use a comma-separated string of tag IDs.\n\n**Note**: The `not_iptc_tags` parameter is only available in the `v3_nlp_iptc_tags` subscription plan.\n\nTo learn more, see [IPTC Media Topic NewsCodes](https://www.iptc.org/std/NewsCodes/treeview/mediatopic/mediatopic-en-GB.html).\n"
+      },
+      "iab_tags": {
+        "type": "string",
+        "example": "Business,Events",
+        "description": "Filters articles based on Interactive Advertising Bureau (IAB) content categories. These tags provide a standardized taxonomy for digital advertising content categorization. To specify multiple IAB categories, use a comma-separated string.\n\n**Note**: The `iab_tags` parameter is only available in the `v3_nlp_iptc_tags` subscription plan.\n\nTo learn more, see the [IAB Content taxonomy](https://iabtechlab.com/standards/content-taxonomy/).\n"
+      },
+      "not_iab_tags": {
+        "type": "string",
+        "example": "Agriculture,Metals",
+        "description": "Inverse of the `iab_tags` parameter. Excludes articles based on Interactive Advertising Bureau (IAB) content categories. These tags provide a standardized taxonomy for digital advertising content categorization. To specify multiple IAB categories to exclude, use a comma-separated string.\n\n**Note**: The `not_iab_tags` parameter is only available in the `v3_nlp_iptc_tags` subscription plan.\n\nTo learn more, see the [IAB Content taxonomy](https://iabtechlab.com/standards/content-taxonomy/).\n"
+      },
+      "custom_tags": {
+        "type": "string",
+        "example": "Tag1,Tag2",
+        "description": "Filters articles based on provided taxonomy that is tailored to your specific needs and is accessible only with your API key. To specify tags, use the following pattern: \n\n- `custom_tags.taxonomy=Tag1,Tag2`, where `taxonomy` is the taxonomy name and `Tag1,Tag2` is a comma-separated list of tag names.\n\nExample: `custom_tags.industry=\"Manufacturing,Logistics\"`\n\nTo learn more, see the [Custom tags](https://www.newscatcherapi.com/docs/news-api/guides-and-concepts/custom-tags).\n"
+      },
+      "exclude_duplicates": {
+        "type": "boolean",
+        "description": "If true, excludes duplicate and highly similar articles from the search results. If false, returns all relevant articles, including duplicates. \n\nTo learn more, see [Articles deduplication](https://www.newscatcherapi.com/docs/news-api/guides-and-concepts/articles-deduplication).\n",
+        "example": true
+      },
+      "robots_compliant": {
+        "type": "boolean",
+        "description": "If true, returns only articles that comply with the publisher's robots.txt rules. If false, returns only articles that do not comply with robots.txt rules. If omitted, returns all articles regardless of compliance status.\n",
+        "example": true
+      }
+    }
+  }
+}
