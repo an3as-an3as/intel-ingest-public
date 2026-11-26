@@ -275,7 +275,7 @@ async function renderDashboard(setId) {
           <button data-dashboard-globe-action="left" aria-label="Rotate globe left">←</button><button data-dashboard-globe-action="right" aria-label="Rotate globe right">→</button>
           <button data-dashboard-globe-action="in" aria-label="Zoom in on globe">+</button><button data-dashboard-globe-action="out" aria-label="Zoom out on globe">−</button><button data-dashboard-globe-action="reset">Reset view</button></div>
         <div id="map" class="wireframe-globe" role="img" aria-label="Wireframe event globe with coloured event dots. Drag to rotate, scroll to zoom, or use the buttons above."></div>
-        <div class="pad small muted">Larger base circle = more clustered articles. Zoom in to separate nearby reports. Stem height is not severity. Coordinates and cluster centres are approximate. <span id="nogeo"></span></div>
+        <div class="pad small muted">Numbers show how many articles are grouped at a place; dots grow to a fixed size, then only the number increases. Zoom in to separate nearby reports. Locations are model-estimated and approximate. <span id="nogeo"></span></div>
         <div id="dashboard-globe-selection" class="pad small globe-selection" aria-live="polite">Click a dot to inspect its reports.</div></div>
       <div class="card"><div class="row pad" style="padding-bottom:0"><h2>Reporting</h2><span class="muted small" id="list-note"></span></div>
         <div class="dash-list" id="dash-list"></div></div>

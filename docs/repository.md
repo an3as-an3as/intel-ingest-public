@@ -2,9 +2,11 @@
 
 ## Current status
 
-This public repository is a history-free release snapshot. Development history is
-kept separately. Contributions should not include credentials, private data or
-real operational intelligence requirements.
+Intel Ingest is released under the MIT licence (see `LICENSE`). The public
+repository is a history-free release snapshot: internal working notes
+(`docs/internal/`) are excluded, and development history is kept separately.
+Contributions must not include credentials, private data or real operational
+intelligence requirements.
 
 GitHub stores the source code and its history, not the running application or
 its data. Creating or pushing this repository does not deploy the application,

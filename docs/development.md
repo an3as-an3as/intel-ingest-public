@@ -103,7 +103,7 @@ promoted by copying its database over production.
 2. Once the foundation is accepted, create a small feature branch/worktree from
    the accepted baseline. Give each writing agent its own branch/worktree.
 3. Define acceptance criteria, mock fixtures and dependencies before coding.
-   Use the stages in `ingestion-rollout.md` rather than one combined rewrite.
+   Deliver changes in small, independently testable stages rather than one combined rewrite.
 4. Test each feature by itself, then the intended combination in development.
    Fix the query contract before parallel backend/frontend implementation.
 5. Open one pull request per independently reviewable feature. Only merge accepted
